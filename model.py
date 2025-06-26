@@ -33,7 +33,7 @@ def clear_memory():
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
 
-def generate_response(prompt, max_new_tokens=150, temperature=0.7, top_p=0.85):
+def generate_response(prompt, max_new_tokens=512, temperature=0.7, top_p=0.85):
     if not model:
         return "Модель не загружена"
     
