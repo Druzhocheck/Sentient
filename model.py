@@ -63,7 +63,6 @@ def generate_response(prompt, max_new_tokens=150, temperature=0.7, top_p=0.85):
         clear_memory()
 
 def chat():
-    print("Чат с Dobby (для выхода введите 'quit')\n")
     history = ""
     max_history_tokens = 512  # Ограничиваем историю в токенах
     
@@ -88,11 +87,11 @@ def chat():
             response = generate_response(prompt)
             
             # Обновляем историю только существенной информацией
-            if len(history.split('\n')) > 6:  # Если история слишком длинная
-                history = '\n'.join(history.split('\n')[-3:])  # Оставляем последние 3 строки
+            #if len(history.split('\n')) > 6:  # Если история слишком длинная
+            #    history = '\n'.join(history.split('\n')[-3:])  # Оставляем последние 3 строки
             
             print(f"\nDobby: {response}\n")
-            history += f"Пользователь: {user_input}\nАссистент: {response}\n"
+            #history += f"Пользователь: {user_input}\nАссистент: {response}\n"
             
         except KeyboardInterrupt:
             print("\nЗавершение сеанса...")
@@ -101,6 +100,4 @@ def chat():
             print(f"\nОшибка: {str(e)}\n")
     
     clear_memory()
-
-if __name__ == "__main__":
-    chat()
+    return response
