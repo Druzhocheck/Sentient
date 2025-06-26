@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 from news import news_prompt
-from model import chat
+from model import chat, generate_response
 
 # Инициализация бота с вашим токеном
 bot = telebot.TeleBot("8042449400:AAGFepJ5TMj2RHEWIGe41W3iUFLAgTk8Kcc")
@@ -49,7 +49,7 @@ def handle_text(message):
     if message.text == "News":
         show_categories(message)
     else:
-        bot.send_message(message.chat.id, "Используйте кнопки для навигации")
+        bot.send_message(message.chat.id, chat(message.text))
 
 def show_categories(message):
     markup = types.InlineKeyboardMarkup()
@@ -95,19 +95,19 @@ def callback_inline(call):
     if call.data == "back":
         pass
     elif call.data == "innovations":
-        model_answer = chat(news_prompt("innovations"))
+        model_answer = generate_response(news_prompt("innovations"))
         bot.send_message(
             call.message.chat.id,
             model_answer,
         )
     elif call.data == "hacking":
-        model_answer = chat(news_prompt("hacking"))
+        model_answer = generate_response(news_prompt("hacking"))
         bot.send_message(
             call.message.chat.id,
             model_answer,
         )
     elif call.data == "laws":
-        model_answer = chat(news_prompt("laws"))
+        model_answer = generate_response(news_prompt("laws"))
         bot.send_message(
             call.message.chat.id,
             model_answer,
@@ -119,31 +119,31 @@ def callback_inline(call):
             model_answer,
         )
     elif call.data == "mainnet":
-        model_answer = chat(news_prompt("mainnet"))
+        model_answer = generate_response(news_prompt("mainnet"))
         bot.send_message(
             call.message.chat.id,
             model_answer,
         )
     elif call.data == "mergers":
-        model_answer = chat(news_prompt("mergers"))
+        model_answer = generate_response(news_prompt("mergers"))
         bot.send_message(
             call.message.chat.id,
             model_answer,
         )
     elif call.data == "airdrop":
-        model_answer = chat(news_prompt("airdrop"))
+        model_answer = generate_response(news_prompt("airdrop"))
         bot.send_message(
             call.message.chat.id,
             model_answer,
         )
     elif call.data == "layoffs":
-        model_answer = chat(news_prompt("layoffs"))
+        model_answer = generate_response(news_prompt("layoffs"))
         bot.send_message(
             call.message.chat.id,
             model_answer,
         )
     elif call.data == "vulnerabilities":
-        model_answer = chat(news_prompt("vulnerabilities"))
+        model_answer = generate_response(news_prompt("vulnerabilities"))
         bot.send_message(
             call.message.chat.id,
             model_answer,
