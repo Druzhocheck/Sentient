@@ -1,5 +1,7 @@
 import telebot
 from telebot import types
+from news import news_prompt
+from model import chat
 
 # Инициализация бота с вашим токеном
 bot = telebot.TeleBot("8042449400:AAGFepJ5TMj2RHEWIGe41W3iUFLAgTk8Kcc")
@@ -62,8 +64,8 @@ def show_categories(message):
     btn7 = types.InlineKeyboardButton("Mass Layoffs", callback_data="layoffs")
     btn8 = types.InlineKeyboardButton("Mergers", callback_data="mergers")
     btn9 = types.InlineKeyboardButton("Technica Innovations", callback_data="innovations")
-    btn10 = types.InlineKeyboardButton("Своя категория", callback_data="custom_category")
-    btn_back = types.InlineKeyboardButton("Назад", callback_data="back")
+    btn10 = types.InlineKeyboardButton("My category", callback_data="custom_category")
+    btn_back = types.InlineKeyboardButton("Back", callback_data="back")
     
     # Распределяем кнопки по рядам
     markup.row(btn1)
@@ -76,7 +78,7 @@ def show_categories(message):
     
     bot.send_message(
         message.chat.id,
-        'Выберите категорию новостей или введите свою',
+        "Choose category or enter yours",
         reply_markup=markup
     )
 
@@ -93,9 +95,58 @@ def callback_inline(call):
     if call.data == "back":
         pass
     elif call.data == "innovations":
+        model_answer = chat(news_prompt("innovations"))
         bot.send_message(
             call.message.chat.id,
-            "Innovations",
+            model_answer,
+        )
+    elif call.data == "hacking":
+        model_answer = chat(news_prompt("hacking"))
+        bot.send_message(
+            call.message.chat.id,
+            model_answer,
+        )
+    elif call.data == "laws":
+        model_answer = chat(news_prompt("laws"))
+        bot.send_message(
+            call.message.chat.id,
+            model_answer,
+        )
+    elif call.data == "investments":
+        model_answer = chat(news_prompt("investments"))
+        bot.send_message(
+            call.message.chat.id,
+            model_answer,
+        )
+    elif call.data == "mainnet":
+        model_answer = chat(news_prompt("mainnet"))
+        bot.send_message(
+            call.message.chat.id,
+            model_answer,
+        )
+    elif call.data == "mergers":
+        model_answer = chat(news_prompt("mergers"))
+        bot.send_message(
+            call.message.chat.id,
+            model_answer,
+        )
+    elif call.data == "airdrop":
+        model_answer = chat(news_prompt("airdrop"))
+        bot.send_message(
+            call.message.chat.id,
+            model_answer,
+        )
+    elif call.data == "layoffs":
+        model_answer = chat(news_prompt("layoffs"))
+        bot.send_message(
+            call.message.chat.id,
+            model_answer,
+        )
+    elif call.data == "vulnerabilities":
+        model_answer = chat(news_prompt("vulnerabilities"))
+        bot.send_message(
+            call.message.chat.id,
+            model_answer,
         )
     elif call.data == "custom_category":
         # Обработка выбора своей категории
@@ -103,15 +154,16 @@ def callback_inline(call):
             call.message.chat.id,
             "Write down what kind of news you would like to recive."
         )
-        bot.register_next_step_handler(msg, process_custom_category)
-    go_back_to_main_menu(call)
+        bot.register_next_step_handler(msg, process_custom_category, call)
 
-def process_custom_category(message):
+def process_custom_category(message, call):
     bot.send_message(
         message.chat.id,
+        {message.text}
         #f"Вы создали категорию: {message.text}\nТеперь можно добавить новости в эту категорию."
     )
-    show_categories(message)
+    #show_categories(message)
+    go_back_to_main_menu(call)
 
 # Запуск бота
 if __name__ == "__main__":
